@@ -132,7 +132,7 @@ function onFrame() {
 
 	drawCircle(timeDomainData);
 	drawBlobs(timeDomainData);
-	//drawImage(timeDomainData);
+	drawImage(timeDomainData);
 
 	paper.view.draw();
 }
@@ -199,28 +199,18 @@ function drawBlobs(data) {
 	}
 }
 
-var speaker1, speaker2;
+var speaker1;
 function drawImage(data) {
     if (speaker1) {
         speaker1.remove();
     }
 
-    var size = 300,
-        left = Math.floor(($(window).width()) / 2),
-        top = Math.floor(($(window).height()) / 2);
+    var width = 700, height = 100;
 
     speaker1 = new paper.Raster("apple");
-    speaker1.size = new paper.Size(size, size);
-    speaker1.position = new paper.Point(left - size, top);
+    speaker1.size = new paper.Size(width, height);
+    speaker1.position = new paper.Point(paper.view.center);
     speaker1.scale(data[50 * (5 + 1)] / 100);
-
-    if (speaker2) {
-        speaker2.remove();
-    }
-    speaker2 = new paper.Raster("apple");
-    speaker2.size = new paper.Size(size, size);
-    speaker2.position = new paper.Point(left + size, top);
-    speaker2.scale(data[50 * (8 + 1)] / 100);
 }
 
 function getColor() {
