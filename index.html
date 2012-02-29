@@ -1,1 +1,98 @@
-My GitHub Page
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>SyncBody</title>
+	<style type="text/css" media="screen">
+		body {
+			/*background-color: #525152;*/
+			color: #DDD;
+			overflow: hidden;
+			margin: 0px;
+		}
+
+		#back {
+			position: absolute;
+			top: 0;
+			left: 0;
+			color: black;
+			z-index: 1;
+		}
+
+		canvas {
+			position: absolute;
+			top: 0;
+			left: 0;
+			z-index: 2;
+		}
+	</style>
+	<script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jquery.easing.1.3.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jsdeferred.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/paper.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/main.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" charset="utf-8">
+	$(function() {
+		Deferred.define();
+
+		AudioDance.play(function() {
+			var SPEED = 700,
+				MARGIN = 100,
+
+				winHeight = $(window).height(),
+				winWidth = $(window).width(),
+
+				back = $("#back")
+						.css({
+							height: winHeight,
+							width: winWidth + MARGIN,
+							"background-image": "url('img/back2.png')",
+							"background-repeat": "repeat"
+						}).html("")
+				;
+
+			loop();
+			function loop() {
+				next(function() {
+					var deferred = new Deferred();
+					back
+						.animate({
+							left: -(MARGIN - 30)
+						}, {duration: SPEED, easing: "easeOutElastic", complete: function() {
+							deferred.call();
+						}
+					});
+					return deferred;
+				}).
+				next(function() {
+					var deferred = new Deferred();
+					back
+						.animate({
+							left: 0
+						}, {duration: SPEED, easing: "linear", complete: function() {
+							deferred.call();
+						}
+					});
+					return deferred;
+				}).
+				wait(5).
+				next(function() {
+					loop();
+				});
+			}
+		});
+
+	});
+	</script>
+</head>
+<body>
+	<!--
+	Author: hisasann
+	SpecialThanks: ken_c_lo
+	-->
+	<div id="back">Loading...音楽ファイルをダウンロードしています。<br>ちょっとまっててくださいね。テヘペロ！</div>
+
+	<canvas id="canvas" resize></canvas>
+	<img id="apple" src="img/apple.png" style="display:none;">
+</body>
+</html>
